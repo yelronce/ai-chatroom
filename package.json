@@ -1,0 +1,19 @@
+{
+  "name": "ai-chatroom",
+  "version": "1.0.0",
+  "description": "多用户群聊聊天室，注册登录后共享同一聊天室",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-session": "^1.18.0",
+    "socket.io": "^4.7.5"
+  }
+}
