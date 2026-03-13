@@ -236,8 +236,13 @@ io.on('connection', (socket) => {
     io.emit('message', msg);
 
     // @AI 或 @主持人 时，AI 主持人回复
-    const needAI = /@(AI|主持人)/i.test(text) && process.env.ZHIPU_API_KEY;
+    const needAI = /@(AI|主持人)/i.test(text);
     if (needAI) {
+      if (!process.env.ZHIPU_API_KEY) {
+        const hintMsg = { id: Date.now() + '-ai', username: AI_HOST_NAME, content: 'AI 主持人未配置。请在 Railway 的 Variables 中添加 ZHIPU_API_KEY（智谱 API 密钥，获取地址: https://open.bigmodel.cn/）', time: Date.now() };
+        io.emit('message', hintMsg);
+        return;
+      }
       const recent = messageHistory.slice(-10).map(m => ({
         role: m.username === AI_HOST_NAME ? 'assistant' : 'user',
         content: `${m.username}: ${m.content}`
